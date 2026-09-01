@@ -16,6 +16,12 @@ public:
         totalAccounts = totalAccounts + 1;
     }
 
+    Account(const Account& other) {
+        this->owner = other.owner + " copia";
+        this->balance = other.balance;
+        totalAccounts = totalAccounts + 1;
+    }
+
     void deposit(double amount) {
         if (amount > 0) {
             balance = balance + amount;
@@ -42,16 +48,30 @@ public:
     string getOwner() const {
         return owner;
     }
+
+    bool operator==(const Account& other) {
+        return (this->balance == other.balance);
+    }
+
+    static int getTotalAccounts() {
+        return totalAccounts;
+    }
 };
 
 int Account::totalAccounts = 0;
 
 int main() {
     Account c1("Juan", 1000);
-    c1.deposit(200);
+    Account c2("Maria", 500);
+    Account c3("Pedro", 1000);
 
-    if (c1.withdraw(500)) {
-        cout << "Retiro exitoso. Saldo: " << c1.getBalance() << endl;
+    cout << "Total de cuentas: " << Account::getTotalAccounts() << endl;
+
+    if (c1 == c3) {
+        cout << "Las cuentas son iguales" << endl;
+    }
+    else {
+        cout << "Las cuentas son diferentes" << endl;
     }
 
     return 0;
