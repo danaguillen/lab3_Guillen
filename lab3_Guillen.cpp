@@ -49,12 +49,23 @@ public:
         return owner;
     }
 
-    bool operator==(const Account& other) {
+    bool operator==(const Account& other) const {
         return (this->balance == other.balance);
     }
 
     static int getTotalAccounts() {
         return totalAccounts;
+    }
+
+    void transfer(Account& other, double amount) {
+        bool ok = this->withdraw(amount);
+        if (ok == true) {
+            other.deposit(amount);
+            cout << "Transferencia lista" << endl;
+        }
+        else {
+            cout << "No hay dinero para transferir" << endl;
+        }
     }
 };
 
@@ -73,6 +84,15 @@ int main() {
     else {
         cout << "Las cuentas son diferentes" << endl;
     }
+
+    c1.deposit(200);
+
+    bool pude = c2.withdraw(2000);
+    if (pude == false) {
+        cout << "No se pudo retirar" << endl;
+    }
+
+    c1.transfer(c2, 100);
 
     return 0;
 }
